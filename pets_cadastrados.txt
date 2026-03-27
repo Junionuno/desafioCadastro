@@ -1,8 +1,8 @@
-1 - geraldo
-2 - gato
-3 - macho
-4 - Rua Kalama, 486, nova lima
-5 - 2 anos
-6 - 4.0kg
-7 - siames
+1 - GERALDO
+2 - null
+3 - MACHO
+4 - Rua kalama, 486, nova lima
+5 - 5 anos
+6 - 12.0kg
+7 - srd
 

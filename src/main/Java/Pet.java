@@ -2,9 +2,8 @@ package main.Java;
 
 public class Pet {
     private String name;
-    private String lastName;
-    private String tipoPet;
-    private String sexo;
+    private TipoPet tipoPet;
+    private SexoPet sexo;
     private Endereco endereco;
     private int idade;
     private double peso;
@@ -29,27 +28,19 @@ public class Pet {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getTipoPet() {
+    public TipoPet getTipoPet() {
         return tipoPet;
     }
 
-    public void setTipoPet(String tipoPet) {
+    public void setTipoPet(TipoPet tipoPet) {
         this.tipoPet = tipoPet;
     }
 
-    public String getSexo() {
+    public SexoPet getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(SexoPet sexo) {
         this.sexo = sexo;
     }
 
