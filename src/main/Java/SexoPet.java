@@ -1,6 +1,6 @@
 package main.Java;
 
 public enum SexoPet {
-    MACHO,
-    FEMEA
+    Macho,
+    Femea
 }

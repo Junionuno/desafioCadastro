@@ -1,5 +1,6 @@
 package main.Java;
 
+import javax.security.auth.login.LoginException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 
 public class main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, IdadeInvalidaException {
         Scanner sc = new Scanner(System.in);
         File file = new File("formulario.txt");
         boolean fileCreated = file.createNewFile();
@@ -58,30 +59,82 @@ public class main {
                                 break;
                             case 2:
                             if (answer.equalsIgnoreCase("cachorro")){
-                                pet.setTipoPet(TipoPet.CACHORRO);
+                                pet.setTipoPet(TipoPet.Cachorro);
                             } else if (answer.equalsIgnoreCase("gato")) {
-                                pet.setTipoPet(TipoPet.GATO);
+                                pet.setTipoPet(TipoPet.Gato);
                             } break;
                             case 3:
                             if (answer.equalsIgnoreCase("femea")){
-                                pet.setSexo(SexoPet.FEMEA);
+                                pet.setSexo(SexoPet.Femea);
                             } else if (answer.equalsIgnoreCase("macho")) {
-                                pet.setSexo(SexoPet.MACHO);
+                                pet.setSexo(SexoPet.Macho);
                             } break;
                             case 4:
-                                System.out.println("Numero: ");
-                                int numero = sc.nextInt();
-                                sc.nextLine();
+                                System.out.println("Numero: (opcional)");
+                                String numero = sc.nextLine();
+                                if (!numero.isEmpty()){
+                                    Endereco.numero = numero;
+                                }else {
+                                    Endereco.numero = "Número não informado";
+                                }
                                 System.out.println("Cidade: ");
                                 String cidade = sc.nextLine();
                                 System.out.println("Rua: ");
                                 String rua = sc.nextLine();
-                                Endereco endereco = new Endereco(numero, cidade, rua);
+                                Endereco endereco = new Endereco(cidade, rua);
                                 pet.setEndereco(endereco);
                                 break;
-                            case 5: pet.setIdade(Integer.parseInt(answer)); break;
-                            case 6: pet.setPeso(Double.parseDouble(answer)); break;
-                            case 7: pet.setRaca(answer);
+                            case 5:
+                                String tentativaIdade = answer;
+                                while (true){
+                                    if (!tentativaIdade.matches("(\\d+([.,]\\d+)?)")){
+                                        System.out.println("Erro: Digite apenas números!");
+                                        tentativaIdade = sc.nextLine();
+                                        continue;
+                                    }
+
+                                    try {
+                                        double idade = Double.parseDouble(tentativaIdade.replace(",", "."));
+                                        if (idade > 20){
+                                            throw new IdadeInvalidaException();
+                                        }
+                                        pet.setIdade(idade);
+                                        break;
+                                    }catch (IdadeInvalidaException e){
+                                        System.out.print(e.getMessage());
+                                        System.out.println(" Tente novamente: ");
+                                        tentativaIdade = sc.nextLine();
+                                    }
+                                }
+                                break;
+                            case 6:
+                                String tentativaPeso = answer;
+                                while (true){
+                                    if (!tentativaPeso.matches("(\\d+([.,]\\d+)?)")){
+                                        System.out.println("Erro: Digite apenas números!");
+                                        tentativaPeso = sc.nextLine();
+                                        continue;
+                                    }
+                                    try {
+                                        double peso = Double.parseDouble(tentativaPeso.replace("," , "."));
+                                        if (peso > 60 || peso < 0.5){
+                                            throw new PesoInvalidoException();
+                                        }
+                                        pet.setPeso(peso);
+                                        break;
+                                    } catch (PesoInvalidoException e) {
+                                        System.out.print(e.getMessage());
+                                        System.out.println(" Tente novamente: ");
+                                        tentativaPeso = sc.nextLine();
+                                    }
+                                } break;
+                            case 7:
+                                String tentativaRaca = answer;
+                                while(!tentativaRaca.matches("^[a-zA-ZÀ-ÿ ]+$")){
+                                    System.out.println("Erro! Digite novamente: ");
+                                    tentativaRaca = sc.nextLine();
+                                }
+                                pet.setRaca(tentativaRaca);
                         }
                         count ++;
                     }

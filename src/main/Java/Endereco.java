@@ -1,12 +1,11 @@
 package main.Java;
 
 public class Endereco {
-    private int numero;
+    public static String numero;
     private String cidade;
     private String rua;
 
-    public Endereco(int numero, String cidade, String rua) {
-        this.numero = numero;
+    public Endereco(String cidade, String rua) {
         this.cidade = cidade;
         this.rua = rua;
     }
@@ -16,13 +15,11 @@ public class Endereco {
         return  "Rua " + rua + ", " + numero + ", " + cidade;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
+    public void setNumero(String numero) { Endereco.numero = numero;}
 
     public String getCidade() {
         return cidade;
