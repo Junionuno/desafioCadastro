@@ -1,7 +1,8 @@
 package main.Java;
 
-import javax.security.auth.login.LoginException;
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -141,7 +142,12 @@ public class main {
                     pets.add(pet);
                     dadosParaSalvar.append(pet).append("\n");
 
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("pets_cadastrados.txt"))){
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
+                    String dateFormated = localDateTime.format(dtf);
+
+                    String caminhoCompleto = "G:/Desafio Cadastro/src/main/Java/petsCadastrados/"+ dateFormated + "-" + pet.getName().toUpperCase() + ".txt";
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoCompleto))){
                         writer.write(dadosParaSalvar.toString());
                         writer.newLine();
                         System.out.println("Pet cadastrado com sucesso!");
