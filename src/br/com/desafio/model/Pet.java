@@ -1,4 +1,7 @@
-package main.Java;
+package br.com.desafio.model;
+
+import br.com.desafio.enums.SexoPet;
+import br.com.desafio.enums.TipoPet;
 
 public class Pet {
     private String name;
@@ -11,13 +14,13 @@ public class Pet {
 
     @Override
     public String toString() {
-        return  "1 - " + name + '\n' +
-                "2 - " + tipoPet + '\n' +
-                "3 - " + sexo + '\n' +
-                "4 - " + endereco + '\n' +
-                "5 - " + idade + " anos"  + '\n' +
-                "6 - " + peso + "kg" + '\n'+
-                "7 - " + raca ;
+        return  " - " + name + '\n' +
+                " - " + tipoPet + '\n' +
+                " - " + sexo + '\n' +
+                " - " + endereco + '\n' +
+                " - " + idade + " anos"  + '\n' +
+                " - " + peso + "kg" + '\n'+
+                " - " + raca ;
     }
 
     public String getName() {

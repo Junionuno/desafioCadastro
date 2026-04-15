@@ -1,4 +1,4 @@
-package main.Java;
+package br.com.desafio.model;
 
 public class Endereco {
     public static String numero;

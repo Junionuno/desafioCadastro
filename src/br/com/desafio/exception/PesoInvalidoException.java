@@ -1,4 +1,4 @@
-package main.Java;
+package br.com.desafio.exception;
 
 public class PesoInvalidoException extends Exception {
     public PesoInvalidoException(){
