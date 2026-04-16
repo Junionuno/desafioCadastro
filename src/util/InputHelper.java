@@ -45,9 +45,13 @@ public class InputHelper {
     }
 
     public static SexoPet lerSexoPet(String valor){
+        while (!valor.equalsIgnoreCase("macho") && !valor.equalsIgnoreCase("femea") && !valor.equalsIgnoreCase("fêmea")){
+            System.out.println("Erro! Escolha entre macho ou femea.");
+            valor = sc.nextLine();
+        }
         if (valor.equalsIgnoreCase("macho")){
             return SexoPet.Macho;
-        }else if(valor.equalsIgnoreCase("femea")){
+        }else if(valor.equalsIgnoreCase("femea") || valor.equalsIgnoreCase("fêmea")){
             return SexoPet.Femea;
         }else{
             System.out.println("Erro! Escolha entre macho ou femea.");
@@ -63,15 +67,20 @@ public class InputHelper {
         }else {
             Endereco.numero = "Número não informado";
         }
+
         System.out.println("Cidade: ");
         String cidade = sc.nextLine();
-        if (cidade.isEmpty()){
-            System.out.println("Digite o nome da cidade: ");
+        while (!cidade.matches("^[a-zA-ZÀ-ÿ ]+$")){
+            System.out.println("Erro! Digite novamente: ");
             cidade = sc.nextLine();
         }
 
         System.out.println("Rua: ");
         String rua = sc.nextLine();
+        while(!rua.matches("^[a-zA-ZÀ-ÿ ]+$")){
+            System.out.println("Erro! Digite novamente: ");
+            rua = sc.nextLine();
+        }
 
         return new Endereco(cidade, rua);
     }

@@ -1,14 +1,10 @@
 package br.com.desafio;
 import br.com.desafio.Service.PetService;
 import br.com.desafio.model.Pet;
-import util.InputHelper;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static util.InputHelper.*;
@@ -77,23 +73,36 @@ public class Main {
                     break;
                 case 2:
                     sc.nextLine();
-                    System.out.println("---Busca de Pets---");
+                    System.out.println("\n---Busca de Pets---");
                     System.out.println("Tipo cachorro (Cachorro/Gato): ");
                     String tipo = sc.nextLine();
                     while (!tipo.equalsIgnoreCase("cachorro") && !tipo.equalsIgnoreCase("gato")){
-                        System.out.println("Erro! escolha entre cachorro ou gato!");
+                        System.out.println("\nErro! escolha entre cachorro ou gato!");
                         tipo = sc.nextLine();
                     }
 
-                    System.out.println("Digite o valor que procura (Nome, raça ou idade): ");
+                    System.out.println("\nDigite o valor que procura (Nome, raça ou idade): ");
                     String valorBusca = sc.nextLine();
 
                     service.buscarEApresentarPets(tipo, "", valorBusca);
 
-                    System.out.println("\nPressione enter para continuar...");
                     break;
+                case 3:
+                    sc.nextLine();
+                    System.out.println("\n---Alteração de Cadastro---");
+                    System.out.println("Tipo cachorro (Cachorro/Gato): ");
+                    String tipoAltera = sc.nextLine();
+                    while (!tipoAltera.equalsIgnoreCase("cachorro") && !tipoAltera.equalsIgnoreCase("gato")){
+                        System.out.println("\nErro! escolha entre cachorro ou gato!");
+                        tipoAltera = sc.nextLine();
+                    }
+
+                    System.out.println("\nDigite o valor que procura (Nome, raça ou idade): ");
+                    String valorBuscaAltera = sc.nextLine();
+
+                    service.alterarPet(tipoAltera, valorBuscaAltera);
                 case 5:
-                    System.out.println("Saindo...");
+                    System.out.println("\nSaindo...");
                     break;
                 default:
                     while (numMenu > 5 || numMenu < 5) {
