@@ -2,10 +2,12 @@ package br.com.desafio.Service;
 
 import br.com.desafio.enums.SexoPet;
 import br.com.desafio.enums.TipoPet;
+import br.com.desafio.model.Endereco;
 import br.com.desafio.model.Pet;
 import static util.InputHelper.*;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class PetService {
                 String dados = conteudo.toString().toLowerCase();
                 if (dados.contains(tipo.toLowerCase()) && dados.contains(valor.toLowerCase())){
                     count ++;
-                    System.out.println("\n" + count + conteudo.toString());
+                    System.out.println(count + conteudo.toString());
                     encontrou = true;
                 }
             }catch (IOException e){
@@ -112,7 +114,7 @@ public class PetService {
         }
         if (!encontrou) System.out.println("\nNenhum pet encontrado com esses critérios.");
 
-        System.out.println("Escolha o número do pet que deseja alterar: ");
+        System.out.print("\nEscolha o número do pet que deseja alterar: \n>>");
         int escolha = sc.nextInt();
         File arquivoParaAlterar = resultadosEncontrados.get(escolha - 1);
 
@@ -125,66 +127,82 @@ public class PetService {
                 linhas.add(ln);
             }
 
-            String tipoStr = linhas.get(1).split("-")[1].trim();
-            String sexoStr = linhas.get(2).split("-")[1].trim();
+            String nomeStr = linhas.get(0).split("-")[1].trim();
+            petParaEditar.setName(nomeStr);
 
+            String tipoStr = linhas.get(1).split("-")[1].trim();
             if (tipoStr.equalsIgnoreCase("Cachorro")) petParaEditar.setTipoPet(TipoPet.Cachorro);
             else petParaEditar.setTipoPet(TipoPet.Gato);
 
+            String sexoStr = linhas.get(2).split("-")[1].trim();
             if (sexoStr.equalsIgnoreCase("Femea")) petParaEditar.setSexo(SexoPet.Femea);
             else petParaEditar.setSexo(SexoPet.Macho);
 
+            String ruaStr = linhas.get(3).split(",")[0].substring(6);
+            String numeroStr = linhas.get(3).split(",")[1].trim();
+            String cidadeStr = linhas.get(3).split(",")[2].trim();
+            petParaEditar.setEndereco(new Endereco(cidadeStr, ruaStr));
+
+            String idadeStr = linhas.get(4).substring(2, 6).trim();
+            petParaEditar.setIdade(Double.parseDouble(idadeStr));
+
+            String pesoStr = linhas.get(5).substring(2,6).trim();
+            petParaEditar.setPeso(Double.parseDouble(pesoStr));
+
+            String racaStr = linhas.get(6).split("-")[1].trim();
+            petParaEditar.setRaca(racaStr);
         } catch (IOException e) {
             System.out.println("Erro ao carregar dados originais.");
         }
 
-        System.out.println("O que deseja alterar? ");
-        System.out.println("1. Nome | 2. Endereço | 3. Idade | 4. Peso | 5. Raça | 6. Todos");
+        System.out.println("\nO que deseja alterar? ");
+        System.out.print("[1] Nome | [2] Endereço | [3] Idade | [4] Peso | [5] Raça | [6] Todos \n>>");
         int opc = sc.nextInt();
         sc.nextLine();
 
         if (opc >= 1 && opc <= 6){
             switch (opc){
                 case 1:
-                    System.out.println("Novo nome: ");
+                    System.out.print("Novo nome: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setName(valor);
                     break;
                 case 2:
-                    System.out.println("Novo Endereço: ");
+                    System.out.print("Novo Endereço: \n>>");
                     petParaEditar.setEndereco(lerEndereco());
                     break;
                 case 3:
-                    System.out.println("Nova idade: ");
+                    System.out.print("Nova idade: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setIdade(lerIdade(valor));
                     break;
                 case 4:
-                    System.out.println("Novo peso: ");
+                    System.out.print("Novo peso: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setPeso(validarPeso(valor));
                     break;
                 case 5:
-                    System.out.println("Nova raça: ");
+                    System.out.print("Nova raça: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setRaca(valor);
+                    break;
                 case 6:
-                    System.out.println("Novo nome: ");
+                    System.out.print("Novo nome: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setName(valor);
 
-                    System.out.println("Novo Endereço: ");
+                    System.out.print("Novo Endereço: \n>>");
                     petParaEditar.setEndereco(lerEndereco());
 
-                    System.out.println("Nova idade: ");
+                    System.out.print("Nova idade: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setIdade(lerIdade(valor));
 
-                    System.out.println("Novo peso: ");
+                    System.out.print("Novo peso: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setPeso(validarPeso(valor));
 
-                    System.out.println("Nova raça: ");
+                    System.out.print("Nova raça: \n>>");
                     valor = sc.nextLine();
                     petParaEditar.setRaca(valor);
                     break;
@@ -198,6 +216,71 @@ public class PetService {
         } catch (IOException e) {
             System.out.println("Erro ao salvar alterações: " + e.getMessage());
         }
+
+        String nomeAntigo = arquivoParaAlterar.getName();
+        String novoNome = petParaEditar.getName().toUpperCase();
+
+        if (!nomeAntigo.contains(novoNome)){
+            String dataOriginal = nomeAntigo.substring(0, 16);
+            String novoNomeDir = dataOriginal + "-" + novoNome + ".txt";
+            File novoDir = new File(arquivoParaAlterar.getParent(), novoNomeDir);
+
+            if (arquivoParaAlterar.renameTo(novoDir)){
+                System.out.println("Renomeado para: " + novoNomeDir);
+            }else{
+                System.out.println("Erro ao renomear.");
+            }
+        }
     }
 
+    public void apagarPet(String tipo, String valor){
+        File path = new File(PATH_CADASTROS);
+        File[] arquivos = path.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
+        List<File> resultadosEncontrados = new ArrayList<>();
+
+        if (arquivos == null || arquivos.length == 0){
+            System.out.println("Não há pets cadastrados!");
+        }
+
+        boolean encontrou = false;
+        for (File arq : arquivos){
+            try (BufferedReader reader = new BufferedReader(new FileReader(arq))){
+                StringBuilder conteudo = new StringBuilder();
+                String linha;
+                while ((linha = reader.readLine()) != null){
+                    conteudo.append(linha).append(" ");
+                }
+
+                String dados = conteudo.toString().toLowerCase();
+                if (dados.contains(tipo.toLowerCase()) && dados.contains(valor.toLowerCase())){
+                    resultadosEncontrados.add(arq);
+                    System.out.println(resultadosEncontrados.size() + " " + conteudo);
+                    encontrou = true;
+                }
+            }catch (IOException e){
+                System.out.println("Erro ao ler o arquivo: " + arq.getName());
+            }
+        }
+        if (!encontrou) System.out.println("\nNenhum pet encontrado com esses critérios.");
+
+        System.out.print("\nEscolha o número do pet que deseja deletar: \n>> ");
+        int escolha = sc.nextInt();
+
+        System.out.print("Tem certeza que deseja deletar? (S/N)\n>>");
+        String escolhaDelete = sc.next();
+
+        File arquivoParaDeletar = resultadosEncontrados.get(escolha - 1);
+
+        if (escolhaDelete.equalsIgnoreCase("s")){
+            if (arquivoParaDeletar.delete()){
+                System.out.println("Arquivo de " +  arquivoParaDeletar.getName() + " excluído com sucesso!");
+            }else{
+                System.out.println("Falha ao excluir o arquivo.");
+            }
+        }else {
+            System.out.println("Ação cancelada!");
+        }
+
+
+    }
 }

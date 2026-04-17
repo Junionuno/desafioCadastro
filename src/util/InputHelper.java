@@ -14,7 +14,7 @@ public class InputHelper {
     public static String lerTextoValido(){
         String mensagem = sc.nextLine();
         while (!mensagem.matches("[a-zA-Z\\s]+[a-zA-Z\\s]+")){
-            System.out.println("Erro! Formato inválido. Digite novamente: ");
+            System.out.print("Erro! Formato inválido. Digite novamente: \n>> ");
             mensagem = sc.nextLine();
         }
         return mensagem;
@@ -33,7 +33,7 @@ public class InputHelper {
 
     public static TipoPet lerTipoPet(String valor) {
         while (!valor.equalsIgnoreCase("cachorro") && !valor.equalsIgnoreCase("gato")){
-                System.out.println("Erro! Escolha entre cachorro ou gato.");
+                System.out.print("Erro! Escolha entre cachorro ou gato. \n>> ");
                 valor = sc.nextLine();
         }
         if (valor.equalsIgnoreCase("cachorro")){
@@ -46,7 +46,7 @@ public class InputHelper {
 
     public static SexoPet lerSexoPet(String valor){
         while (!valor.equalsIgnoreCase("macho") && !valor.equalsIgnoreCase("femea") && !valor.equalsIgnoreCase("fêmea")){
-            System.out.println("Erro! Escolha entre macho ou femea.");
+            System.out.print("Erro! Escolha entre macho ou femea. \n>> ");
             valor = sc.nextLine();
         }
         if (valor.equalsIgnoreCase("macho")){
@@ -54,13 +54,13 @@ public class InputHelper {
         }else if(valor.equalsIgnoreCase("femea") || valor.equalsIgnoreCase("fêmea")){
             return SexoPet.Femea;
         }else{
-            System.out.println("Erro! Escolha entre macho ou femea.");
+            System.out.print("Erro! Escolha entre macho ou femea. \n>> ");
         }
         return null;
     }
 
     public static Endereco lerEndereco(){
-        System.out.println("Número: (opcional)");
+        System.out.print("Número: (opcional) \n>> ");
         String numero = sc.nextLine();
         if (!numero.isEmpty()){
             Endereco.numero = numero;
@@ -68,17 +68,17 @@ public class InputHelper {
             Endereco.numero = "Número não informado";
         }
 
-        System.out.println("Cidade: ");
+        System.out.print("Cidade: \n>> ");
         String cidade = sc.nextLine();
         while (!cidade.matches("^[a-zA-ZÀ-ÿ ]+$")){
-            System.out.println("Erro! Digite novamente: ");
+            System.out.print("Erro! Digite novamente: \n>> ");
             cidade = sc.nextLine();
         }
 
-        System.out.println("Rua: ");
+        System.out.print("Rua: \n>> ");
         String rua = sc.nextLine();
         while(!rua.matches("^[a-zA-ZÀ-ÿ ]+$")){
-            System.out.println("Erro! Digite novamente: ");
+            System.out.print("Erro! Digite novamente: \n>> ");
             rua = sc.nextLine();
         }
 
@@ -88,7 +88,7 @@ public class InputHelper {
     public static double lerIdade(String valor){
         while(true){
             if(!valor.matches("(\\d+([.,]\\d+)?)")){
-                System.out.println("Erro: Digite apenas números.");
+                System.out.print("Erro: Digite apenas números. \n>> ");
                 valor = sc.nextLine();
                 continue;
             }
@@ -100,7 +100,7 @@ public class InputHelper {
                     }
                     return idade;
             }catch (IdadeInvalidaException e) {
-                System.out.println(e.getMessage() + " Tente novamente.");
+                System.out.print(e.getMessage() + " Tente novamente. \n>> ");
                 valor = sc.nextLine();
             }
         }
@@ -109,7 +109,7 @@ public class InputHelper {
     public static double validarPeso(String valor){
         while(true){
             if (!valor.matches("(\\d+([.,]\\d+)?)")){
-                System.out.println("Erro: Digite apenas números.");
+                System.out.print("Erro: Digite apenas números. \n>> ");
                 valor = sc.nextLine();
                 continue;
             }
@@ -121,15 +121,14 @@ public class InputHelper {
                 }
                 return peso;
             }catch (PesoInvalidoException e){
-                System.out.println(e.getMessage() + " Tente novamente.");
-                valor = sc.nextLine();
+                System.out.print(e.getMessage() + " Tente novamente. \n>> ");                valor = sc.nextLine();
             }
         }
     }
 
     public static String validarRaca(String valor){
         while(!valor.matches("^[a-zA-ZÀ-ÿ ]+$")){
-            System.out.println("Erro! Digite novamente: ");
+            System.out.print("Erro! Digite novamente: \n>> ");
             valor = sc.nextLine();
         }
         return valor;

@@ -15,14 +15,20 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         File file = new File("src/data/formulario.txt");
         File path = new File("src/data/petsCadastrados");
+        String barra = "=".repeat(46);
 
         int numMenu = 0;
         while (numMenu !=5) {
-            System.out.println("\n1. Cadastrar um novo pet");
-            System.out.println("2. Listar pets por algum critério");
-            System.out.println("3. Alterar os dados do pet cadastrado");
-            System.out.println("4. Deletar um pet cadastrado");
-            System.out.println("5. Sair\n");
+            System.out.println("\n"+barra);
+            System.out.println("============ CADASTRO DE PET 3000 ============");
+            System.out.println(barra);
+            System.out.println("Bem vindo ao sistema de Cadastro de Pet 3000!");
+            System.out.println("\n[1] Cadastrar um novo pet");
+            System.out.println("[2] Listar pets por algum critério");
+            System.out.println("[3] Alterar os dados do pet cadastrado");
+            System.out.println("[4] Deletar um pet cadastrado");
+            System.out.println("[5] Sair\n");
+            System.out.print(">> ");
             numMenu = sc.nextInt();
 
             List<Pet> pets = new ArrayList<>();
@@ -30,7 +36,7 @@ public class Main {
 
             switch (numMenu) {
                 case 1:
-                    System.out.println("\n---Cadastro de Pets---");
+                    System.out.println("\n===== Cadastro de Pets =====");
                     try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                         String question;
                         int count = 1;
@@ -40,6 +46,7 @@ public class Main {
 
                             if (question.trim().isEmpty()) continue;
                             System.out.println(question);
+                            System.out.print(">> ");
                             String answer = sc.nextLine();
 
                             switch (count) {
@@ -73,15 +80,15 @@ public class Main {
                     break;
                 case 2:
                     sc.nextLine();
-                    System.out.println("\n---Busca de Pets---");
-                    System.out.println("Tipo cachorro (Cachorro/Gato): ");
+                    System.out.println("\n===== Busca de Pets =====");
+                    System.out.print("Tipo cachorro (Cachorro/Gato): \n>> ");
                     String tipo = sc.nextLine();
                     while (!tipo.equalsIgnoreCase("cachorro") && !tipo.equalsIgnoreCase("gato")){
-                        System.out.println("\nErro! escolha entre cachorro ou gato!");
+                        System.out.print("\nErro! escolha entre cachorro ou gato! \n>>");
                         tipo = sc.nextLine();
                     }
 
-                    System.out.println("\nDigite o valor que procura (Nome, raça ou idade): ");
+                    System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>>");
                     String valorBusca = sc.nextLine();
 
                     service.buscarEApresentarPets(tipo, "", valorBusca);
@@ -89,7 +96,7 @@ public class Main {
                     break;
                 case 3:
                     sc.nextLine();
-                    System.out.println("\n---Alteração de Cadastro---");
+                    System.out.println("\n===== Alteração de Cadastro =====");
                     System.out.println("Tipo cachorro (Cachorro/Gato): ");
                     String tipoAltera = sc.nextLine();
                     while (!tipoAltera.equalsIgnoreCase("cachorro") && !tipoAltera.equalsIgnoreCase("gato")){
@@ -97,12 +104,28 @@ public class Main {
                         tipoAltera = sc.nextLine();
                     }
 
-                    System.out.println("\nDigite o valor que procura (Nome, raça ou idade): ");
+                    System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>>");
                     String valorBuscaAltera = sc.nextLine();
 
                     service.alterarPet(tipoAltera, valorBuscaAltera);
+                    break;
+                case 4:
+                    sc.nextLine();
+                    System.out.println("\n===== Exlcuir Cadastro =====");
+                    System.out.print("Tipo cachorro (Cachorro/Gato): \n>> ");
+                    String tipoDeleta = sc.nextLine();
+                    while (!tipoDeleta.equalsIgnoreCase("cachorro") && !tipoDeleta.equalsIgnoreCase("gato")){
+                        System.out.println("\nErro! escolha entre cachorro ou gato!");
+                        tipoDeleta = sc.nextLine();
+                    }
+
+                    System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>> ");
+                    String valorBuscaDeleta = sc.nextLine();
+
+                    service.apagarPet(tipoDeleta, valorBuscaDeleta);
+                    break;
                 case 5:
-                    System.out.println("\nSaindo...");
+                    System.out.println("\nAté logo...");
                     break;
                 default:
                     while (numMenu > 5 || numMenu < 5) {
