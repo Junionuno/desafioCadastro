@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static util.InputHelper.*;
+import static br.com.desafio.util.InputHelper.*;
 
 
 public class Main {

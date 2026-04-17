@@ -4,10 +4,9 @@ import br.com.desafio.enums.SexoPet;
 import br.com.desafio.enums.TipoPet;
 import br.com.desafio.model.Endereco;
 import br.com.desafio.model.Pet;
-import static util.InputHelper.*;
+import static br.com.desafio.util.InputHelper.*;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package util;
+package br.com.desafio.util;
 
 import br.com.desafio.enums.SexoPet;
 import br.com.desafio.enums.TipoPet;
