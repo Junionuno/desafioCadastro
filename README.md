@@ -210,13 +210,6 @@ Arquivo de 2024-01-15T14-30-BOLT.txt excluído com sucesso!
 
 Algumas escolhas foram adaptadas em relação ao enunciado original:
 
-- **Nome do pet sem sobrenome obrigatório** — faz mais sentido para o contexto de um abrigo (pets têm nomes simples como "Bolt", "Misty")
+- **Nome do pet sem sobrenome obrigatório** — faz mais sentido para o contexto de um abrigo (pets têm nomes simples como "Noah", "Misty")
 - **Formato do arquivo** com data legível (`2024-01-15T14-30-BOLT.txt`) em vez de compacto
-- **Menu com 5 opções** em vez de 6 — a busca já cobre o caso de listagem por critério
-
 ---
-
-## 👤 Autor
-
-Desenvolvido por **[Junionuno](https://github.com/Junionuno)**
-Desafio proposto por [@devmagro](https://www.linkedin.com/in/karilho/)
