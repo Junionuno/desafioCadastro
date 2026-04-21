@@ -11,8 +11,7 @@ import java.util.Scanner;
 public class InputHelper {
     private static Scanner sc = new Scanner(System.in);
 
-    public static String lerTextoValido(){
-        String mensagem = sc.nextLine();
+    public static String lerTextoValido(String mensagem){
         while (!mensagem.matches("[a-zA-Z\\s]+[a-zA-Z\\s]+")){
             System.out.print("Erro! Formato inválido. Digite novamente: \n>> ");
             mensagem = sc.nextLine();
