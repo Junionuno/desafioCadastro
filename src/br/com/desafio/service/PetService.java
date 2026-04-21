@@ -1,4 +1,4 @@
-package br.com.desafio.Service;
+package br.com.desafio.service;
 
 import br.com.desafio.enums.SexoPet;
 import br.com.desafio.enums.TipoPet;
@@ -18,22 +18,48 @@ public class PetService {
     private final String PATH_FORMULARIO = "src/data/formulario.txt";
     private final String PATH_CADASTROS = "src/data/petsCadastrados/";
 
+    public void registrarPet(){
+        System.out.println("\n===== Cadastro de Pets =====");
+        try (BufferedReader br = new BufferedReader(new FileReader(PATH_FORMULARIO))) {
+            String question;
+            int count = 1;
+            Pet pet = new Pet();
 
-    public List<String> obterPerguntasFormulario(){
-        List<String> perguntas = new ArrayList<>();
-        File file = new File(PATH_FORMULARIO);
+            while ((question = br.readLine()) != null) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                if (!linha.trim().isEmpty()) {
-                    perguntas.add(linha);
+                if (question.trim().isEmpty()) continue;
+                System.out.println(question);
+                System.out.print(">> ");
+                String answer = sc.nextLine();
+
+                switch (count) {
+                    case 1:
+                        pet.setName(lerTextoValido(answer));
+                        break;
+                    case 2:
+                        pet.setTipoPet(lerTipoPet(answer));
+                        break;
+                    case 3:
+                        pet.setSexo(lerSexoPet(answer));
+                        break;
+                    case 4:
+                        pet.setEndereco(lerEndereco());
+                        break;
+                    case 5:
+                        pet.setIdade(lerIdade(answer));
+                        break;
+                    case 6:
+                        pet.setPeso(validarPeso(answer));
+                        break;
+                    case 7:
+                        pet.setRaca(validarRaca(answer));
                 }
+                count++;
             }
-        } catch (IOException e) {
-            System.err.println("Erro ao ler formulário: " + e.getMessage());
+            salvarPet(pet);
+        }catch (IOException e){
+            System.out.println("Erro ao ler o formulário: " + e.getMessage());
         }
-        return perguntas;
     }
 
     public void salvarPet(Pet pet){
@@ -51,7 +77,7 @@ public class PetService {
         }
     }
 
-    public void buscarEApresentarPets(String tipo, String criterio, String valor){
+    public void buscarEApresentarPets(){
         File path = new File(PATH_CADASTROS);
         File[] arquivos = path.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
 
@@ -59,6 +85,17 @@ public class PetService {
             System.out.println("Nenhum pet cadastrado até agora.");
             return;
         }
+
+        System.out.println("\n===== Busca de Pets =====");
+        System.out.print("Tipo pet (Cachorro/Gato): \n>> ");
+        String tipo = sc.nextLine();
+        while (!tipo.equalsIgnoreCase("cachorro") && !tipo.equalsIgnoreCase("gato")){
+            System.out.print("\nErro! escolha entre cachorro ou gato! \n>>");
+            tipo = sc.nextLine();
+        }
+
+        System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>>");
+        String valorBusca = sc.nextLine();
 
         boolean encontrou = false;
         int count = 0;
@@ -71,7 +108,7 @@ public class PetService {
                 }
 
                 String dados = conteudo.toString().toLowerCase();
-                if (dados.contains(tipo.toLowerCase()) && dados.contains(valor.toLowerCase())){
+                if (dados.contains(tipo.toLowerCase()) && dados.contains(valorBusca.toLowerCase())){
                     count ++;
                     System.out.println(count + conteudo.toString());
                     encontrou = true;
@@ -83,7 +120,7 @@ public class PetService {
         if (!encontrou) System.out.println("\nNenhum pet encontrado com esses critérios.");
     }
 
-    public void alterarPet(String tipo, String valor){
+    public void alterarPet(){
         File path = new File(PATH_CADASTROS);
         File[] arquivos = path.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
         List<File> resultadosEncontrados = new ArrayList<>();
@@ -91,6 +128,17 @@ public class PetService {
         if (arquivos == null || arquivos.length == 0){
             System.out.println("Não há pets cadastrados!");
         }
+
+        System.out.println("\n===== Alteração de Cadastro =====");
+        System.out.println("Tipo pet (Cachorro/Gato): ");
+        String tipo = sc.nextLine();
+        while (!tipo.equalsIgnoreCase("cachorro") && !tipo.equalsIgnoreCase("gato")){
+            System.out.println("\nErro! escolha entre cachorro ou gato!");
+            tipo = sc.nextLine();
+        }
+
+        System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>>");
+        String valor = sc.nextLine();
 
         boolean encontrou = false;
         for (File arq : arquivos){
@@ -232,7 +280,7 @@ public class PetService {
         }
     }
 
-    public void apagarPet(String tipo, String valor){
+    public void apagarPet(){
         File path = new File(PATH_CADASTROS);
         File[] arquivos = path.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
         List<File> resultadosEncontrados = new ArrayList<>();
@@ -240,6 +288,17 @@ public class PetService {
         if (arquivos == null || arquivos.length == 0){
             System.out.println("Não há pets cadastrados!");
         }
+
+        System.out.println("\n===== Exlcuir Cadastro =====");
+        System.out.print("Tipo pet (Cachorro/Gato): \n>> ");
+        String tipo = sc.nextLine();
+        while (!tipo.equalsIgnoreCase("cachorro") && !tipo.equalsIgnoreCase("gato")){
+            System.out.println("\nErro! escolha entre cachorro ou gato!");
+            tipo = sc.nextLine();
+        }
+
+        System.out.print("\nDigite o valor que procura (Nome, raça ou idade): \n>> ");
+        String valor = sc.nextLine();
 
         boolean encontrou = false;
         for (File arq : arquivos){
