@@ -1,0 +1,7 @@
+ - Fred
+ - Cachorro
+ - Macho
+ - Rua José Gonçalves de Melo, Número não informado, Belo Horizonte
+ - 6.0 anos
+ - 8.0kg
+ - SRD
